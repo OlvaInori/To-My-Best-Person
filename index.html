@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message For Noa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sv-tan: #e8b059;
+            --sv-border: #5a3015;
+            --sv-brown: #864c24;
+            --sv-gold: #f7d51d;
+        }
+
+        body {
+            background-image: url('https://i.pinimg.com/originals/24/2e/37/242e379f970c22bf30e1689290627058.gif');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #469b32; 
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #3e1b00;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+
+        .game-container {
+            position: relative;
+            background-color: var(--sv-tan);
+            border: 6px solid var(--sv-border);
+            padding: 50px 25px;
+            box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 25px rgba(0,0,0,0.4);
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 350px;
+        }
+
+        /* Bigger Font for the Question */
+        h1 { 
+            font-size: 14px; 
+            line-height: 2.2; 
+            margin-bottom: 50px; 
+            color: #3e1b00;
+        }
+
+        .button-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            padding: 18px;
+            border: 4px solid var(--sv-border);
+            cursor: pointer;
+            position: absolute;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #yesBtn { background: #469b32; color: white; z-index: 100; left: 50%; transform: translateX(-110%); }
+        #noBtn { background: #b33d26; color: white; z-index: 10; left: 50%; transform: translateX(10%); }
+
+        .hidden { display: none !important; }
+
+        .secret-note {
+            background: #fff6d5;
+            padding: 25px;
+            border: 4px dashed var(--sv-brown); 
+            text-align: center;
+            font-size: 9px;
+            line-height: 2.2;
+            color: #4a2c10;
+        }
+
+        .pixel-heart {
+            font-size: 45px;
+            display: inline-block;
+            animation: pulse 0.8s infinite;
+            margin-bottom: 25px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="screen1" class="game-container">
+        <h1 id="mainQuestion">IMAI JUST SENT A NEW MASSAGE FOR YOU,<br>DO YOU WANT TO OPEN IT?</h1>
+        <div class="button-wrapper">
+            <button id="yesBtn" class="pixel-btn" onclick="startLoading()">Yes, i'd love to</button>
+            <button id="noBtn" class="pixel-btn" onclick="handleNo()">No thanks, im good</button>
+        </div>
+    </div>
+
+    <div id="loadingScreen" class="game-container hidden">
+        <div class="pixel-star">⭐</div>
+        <p style="margin-top: 15px; font-size: 11px;">READING SECRET NOTE...</p>
+    </div>
+
+    <div id="screen2" class="game-container hidden">
+        <div class="secret-note">
+            <p>HALLO, HG.</p>
+            <p>LOOKING BACK ON THIS YEAR, THERE'S A LOT OF THING HAPPENED. UPS AND DOWNS, HAPPY AND SAD, EACH GIVING US MEMORIES AND EXPERIENCES AT THE SAME TIME.</p>
+            <p>BUT FOR ME, HAVING BOTH OF YOU SUPPORTING MY GOOD AND WRONG IS SOMETHING TO BE GRATEFUL FOR.</p>
+            <p>AS WE STEP INTO NEW YEAR, MY ONLY WISH IS TO KEEP YOU BY MY SIDE AS BEST FRIENDS AND GIRLFRIENDS.</p>
+            <p>I WISH NEXT YEAR WILL BE MUCH BETTER YEAR THAN BEFORE, MAY YOU GET BEST RESULTS IN YOUR STUDY, MAY YOU GET NEW ADVENTURE TO EXPLORE, AND MAY BOTH OF YOU STILL STAY BY MY SIDE.</p>
+            <p>MAY NEW YEAR BRING YOU NEW ADVENTURES, OPPORTUNITIES, AND BLESSINGS<p>
+            <p>I LOVE YOU, GIRLS .<3 </p>
+            <p>HAPPY NEW YEAR !</p>
+            <div style="color: #b33d26; font-size: 15px; margin-top: 15px;">₍ᐢ. .ᐢ₎ ₊˚⊹♡</div>
+            <div style="margin-top: 20px; font-size: 8px; color: #864c24;">WITH LOVE, IMAI </div>
+        </div>
+    </div>
+
+    <script>
+        let scale = 1;
+        let reallyCount = 0;
+
+        function handleNo() {
+            if (reallyCount < 5) {
+                reallyCount++;
+                const mainQ = document.getElementById('mainQuestion');
+                const yesBtn = document.getElementById('yesBtn');
+                const noBtn = document.getElementById('noBtn');
+
+                let reallyText = "";
+                for(let i = 0; i < reallyCount; i++) { reallyText += "really "; }
+                mainQ.innerText = `Are you ${reallyText}sure?`;
+
+                scale += 1.8; 
+                yesBtn.style.left = "50%";
+                yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
+                noBtn.style.opacity = Math.max(0, 1 - (reallyCount * 0.2));
+            }
+            if (reallyCount >= 5) {
+                document.getElementById('noBtn').style.display = "none";
+            }
+        }
+
+        function startLoading() {
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('loadingScreen').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('screen2').classList.remove('hidden');
+            }, 2000);
+        }
+    </script>
+    <audio id="bgMusic" loop>
+  <source src="BGbejir.mp3" type="audio/mpeg">
+</audio>
+<script>
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.href = "login.html";
+}
+
+const music = document.getElementById("bgMusic");
+music.volume = 0.25;
+music.play();
+
+</script>
+</body>
+</html>
